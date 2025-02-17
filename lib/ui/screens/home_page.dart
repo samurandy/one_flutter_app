@@ -5,13 +5,18 @@ import 'package:one_flutter_app/domain/use_cases/get_users_use_case.dart';
 import 'package:one_flutter_app/ui/screens/detail_page.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({super.key, required this.title});
   final String title;
+  final UserRepository userRepository;
+  final GetUsersUseCase getUserUseCase;
+
+  const HomePage(
+      {super.key,
+      required this.title,
+      required this.userRepository,
+      required this.getUserUseCase});
 
   @override
   Widget build(BuildContext context) {
-    final GetUsersUseCase getUserUseCase = GetUsersUseCase(UserRepository());
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,

@@ -1,12 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:one_flutter_app/data/repository/user_repository.dart';
+import 'package:one_flutter_app/domain/use_cases/get_users_use_case.dart';
 import 'package:one_flutter_app/ui/screens/home_page.dart';
 
 void main() {
-  runApp(const MyApp());
+  final UserRepository userRepository = UserRepository();
+  final GetUsersUseCase getUserUseCase = GetUsersUseCase(userRepository);
+
+  runApp(MyApp(
+    userRepository: userRepository,
+    getUserUseCase: getUserUseCase,
+  ));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final UserRepository userRepository;
+  final GetUsersUseCase getUserUseCase;
+
+  const MyApp(
+      {super.key, required this.userRepository, required this.getUserUseCase});
 
   // This widget is the root of your application.
   @override
@@ -18,7 +30,10 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const HomePage(title: 'One Flutter App'),
+      home: HomePage(
+          title: 'One Flutter App',
+          userRepository: userRepository,
+          getUserUseCase: getUserUseCase),
     );
   }
 }
